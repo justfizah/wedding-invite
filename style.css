@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Global Resets, Mobile Sandboxing & Base Presentation Theme
+   1. Rigid Mobile Sandboxing & Base Presentation Theme
    ========================================================================== */
 body, html {
     margin: 0;
@@ -14,18 +14,21 @@ body, html {
     overflow: hidden;
 }
 
+/* FIX: This locks the screen down into a strict mobile layout aspect ratio */
 .invitation-wrapper {
     position: relative;
     width: 100%;
-    max-width: 430px; /* Locked standard smartphone view layout proportions */
+    max-width: 415px; /* Perfect smartphone display size wrapper */
     height: 100vh;
     background: #ffffff;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ==========================================================================
-   LAYER A: Wax Seal Envelope Overlay Component
+   2. Envelope Cover Component View Layer
    ========================================================================== */
 .envelope-overlay {
     position: absolute;
@@ -86,7 +89,7 @@ body, html {
 }
 
 /* ==========================================================================
-   LAYER B: Refactored Scenic Content Deck Panel
+   3. Main Scrollable Content Card Layout View Deck
    ========================================================================== */
 .main-invite-deck {
     width: 100%;
@@ -97,25 +100,32 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    overflow-y: auto;
-    scrollbar-width: none;
+    overflow-y: auto; /* Handles smooth internal structural scrolling */
+    scrollbar-width: none; 
 }
 .main-invite-deck::-webkit-scrollbar { display: none; }
 
 .hidden-view {
     opacity: 0;
     pointer-events: none;
+    display: none !important; /* Locks structural bleeding on initial engine boot */
 }
 
-/* 1. Hero Illustration Banner Styling Area */
+.main-invite-deck.fade-slide-in {
+    opacity: 1;
+    pointer-events: auto;
+    display: flex !important;
+}
+
+/* Hero & Title Segments Layout Rules */
 .hero-illustration-banner {
     width: 100%;
-    height: 320px;
-    background: url('scenic-balcony.png') no-repeat center bottom;
-    background-size: cover;
+    height: 260px;
+    background: linear-gradient(to bottom, #bce3ebd9 0%, #f7d6cbd4 70%, #df999ba6 100%);
     position: relative;
     display: flex;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .hero-caption-box {
@@ -126,44 +136,44 @@ body, html {
 .hero-pretitle {
     font-family: 'Pinyon Script', cursive;
     font-size: 45px;
-    color: #cda291; /* Soft metallic rose gold matching reference image text colour */
+    color: #cda291;
 }
 
-/* 2. Couple Detail Headings Style Profile */
 .couple-details-block {
-    padding: 20px 0 10px;
+    padding: 20px 10px 10px;
     text-align: center;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .couple-main-title {
     font-family: 'Playfair Display', serif;
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 400;
     color: #232323;
-    margin: 0 0 15px;
-    letter-spacing: 0.5px;
+    margin: 0 0 12px;
 }
 
 .audio-control-pill {
-    background: none;
+    background: #ffffff;
     border: 1px solid #c8bba6;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 12px;
+    font-size: 11px;
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 2px;
-    padding: 5px 20px;
+    padding: 5px 18px;
     border-radius: 20px;
     color: #555555;
     cursor: pointer;
-    background-color: #ffffff;
 }
 
-/* 3. REFACTORED: Triple Circular Coins Styling Section Rules */
+/* ==========================================================================
+   4. FIX: Side-by-Side Horizontal Coins Component Layout Rules
+   ========================================================================== */
 .scratch-coins-wrapper {
     width: 100%;
-    padding: 10px 20px 25px;
+    padding: 15px 15px 25px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -174,6 +184,7 @@ body, html {
     align-items: center;
     gap: 6px;
     color: #a19582;
+    margin-bottom: 5px;
 }
 
 .scratch-instruction-row p {
@@ -185,29 +196,32 @@ body, html {
 
 .reveal-header {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
-    margin: 15px 0;
+    margin: 10px 0 20px;
     color: #111111;
 }
 
+/* FIX: Forces coins to stay side-by-side horizontally instead of dropping down */
 .coins-flex-row {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-top: 10px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .coin-container-box {
     position: relative;
-    width: 90px;
-    height: 90px;
+    width: 95px; /* Scales down container properties to neatly fit three in a row */
+    height: 95px;
     border-radius: 50%;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     overflow: hidden;
+    flex-shrink: 0;
 }
 
-/* Inner hidden content layer nodes revealed on scratch completion */
 .secret-data-node {
     position: absolute;
     top: 0;
@@ -224,15 +238,16 @@ body, html {
 
 .secret-data-node span {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: #222;
+    line-height: 1.1;
 }
 
 .secret-data-node label {
     font-size: 9px;
     letter-spacing: 1px;
-    color: #888;
+    color: #777;
     text-transform: uppercase;
     margin-top: 2px;
 }
@@ -243,15 +258,18 @@ body, html {
     left: 0;
     z-index: 5;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
 }
 
-/* 4. REFACTORED: Textured Parchment Countdown Interface Styles */
+/* ==========================================================================
+   5. FIX: Countdown Display Row Framework Layout Rules
+   ========================================================================== */
 .textured-countdown-block {
     width: 100%;
-    padding: 35px 20px;
+    padding: 30px 15px;
     box-sizing: border-box;
-    background: #fdfaf4 url('parchment-texture.jpg') no-repeat center center;
-    background-size: cover;
+    background: #fdfaf4;
     text-align: center;
     border-top: 1px solid #f0e6d2;
     border-bottom: 1px solid #f0e6d2;
@@ -259,7 +277,7 @@ body, html {
 
 .countdown-section-heading {
     font-family: 'Playfair Display', serif;
-    font-size: 28px;
+    font-size: 26px;
     font-style: italic;
     font-weight: 400;
     color: #2c2519;
@@ -269,45 +287,50 @@ body, html {
 .countdown-subtext {
     font-size: 13px;
     color: #6e6552;
-    margin: 0 0 25px;
-    letter-spacing: 0.5px;
+    margin: 0 0 20px;
 }
 
+/* FIX: Aligns the vertical unstyled layout array into neat tracking cards columns */
 .countdown-grid-row {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
 }
 
 .parchment-box {
-    background: rgba(255, 255, 255, 0.5); /* Semi-translucent overlay container blending into backdrop textures */
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(163, 142, 107, 0.25);
-    min-width: 70px;
-    padding: 12px 2px;
+    width: 80px;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    backdrop-filter: blur(2px);
+    border-radius: 6px;
 }
 
 .parchment-box span {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: 600;
     color: #332b1d;
+    line-height: 1;
 }
 
 .parchment-box label {
     font-size: 9px;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     color: #6e6552;
     margin-top: 5px;
 }
 
-/* 5. Venue Map Area Elements Presentation Framing Setup */
+/* ==========================================================================
+   6. Venue Presentation Layout Components
+   ========================================================================== */
 .venue-map-showcase {
     width: 100%;
-    padding: 40px 25px;
+    padding: 35px 20px;
     box-sizing: border-box;
     text-align: center;
     display: flex;
@@ -320,24 +343,24 @@ body, html {
     letter-spacing: 3px;
     color: #9c917c;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .embedded-map-frame-card {
     width: 100%;
-    height: 180px;
-    border-radius: 16px;
+    height: 160px;
+    border-radius: 14px;
     overflow: hidden;
     border: 1px solid #ebdcc5;
-    box-shadow: 0 10px 25px rgba(163, 142, 107, 0.08);
+    box-shadow: 0 6px 20px rgba(163, 142, 107, 0.06);
 }
 
 .venue-footer-title {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 500;
-    color: #431c23; /* Matching deep signature red accent configuration details precisely */
-    margin: 20px 0 6px;
+    color: #431c23;
+    margin: 15px 0 4px;
 }
 
 .venue-disclaimer {
@@ -348,7 +371,7 @@ body, html {
 }
 
 /* ==========================================================================
-   Animations Base Setup Timeline Keyframes
+   Keyframes System
    ========================================================================== */
 @keyframes floatingPulse {
     0% { transform: translateY(-20px) scale(1); }
