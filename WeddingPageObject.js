@@ -1,42 +1,36 @@
 class WooowInvitationPageObject {
     constructor() {
-        // UI DOM Element Bindings
         this.envelopeCover = document.getElementById('envelopeCover');
         this.waxSealButton = document.getElementById('waxSealButton');
         this.invitationContentDeck = document.getElementById('invitationContentDeck');
         this.audioElement = document.getElementById('inviteAudio');
         this.audioToggleButton = document.getElementById('audioToggle');
-        this.scratchWrapper = document.getElementById('scratchCanvasWrapper');
-        this.scratchCanvas = document.getElementById('scratchCanvasMask');
-        this.ctx = this.scratchCanvas ? this.scratchCanvas.getContext('2d') : null;
         
-        // Countdown Dom Target Nodes
+        // Countdown Bindings Nodes
         this.daysSpan = document.getElementById('days');
         this.hoursSpan = document.getElementById('hours');
         this.minutesSpan = document.getElementById('minutes');
         this.secondsSpan = document.getElementById('seconds');
         this.countdownInterval = null;
 
+        // Dynamic Coins Arrays Definition Mapping
+        this.coins = [
+            { id: 1, canvas: document.getElementById('coinCanvas1'), wrapper: document.getElementById('coinWrapper1'), ctx: null },
+            { id: 2, canvas: document.getElementById('coinCanvas2'), wrapper: document.getElementById('coinWrapper2'), ctx: null },
+            { id: 3, canvas: document.getElementById('coinCanvas3'), wrapper: document.getElementById('coinWrapper3'), ctx: null }
+        ];
+        
         this.isScratchingActive = false;
         this.isAudioPlaying = false;
     }
 
-    /**
-     * Handles switching from the Envelope page to the main invitation card
-     */
     openEnvelopeSequence() {
-        // 1. Slide up and fade out the envelope cover layer
         this.envelopeCover.classList.remove('active');
         this.envelopeCover.classList.add('fade-slide-out');
-        
-        // 2. Smoothly reveal the inner content deck
         this.invitationContentDeck.classList.remove('hidden-view');
         this.invitationContentDeck.classList.add('fade-slide-in');
-        
-        // 3. Kick off the background audio stream
         this.startBackgroundAudio();
         
-        // 4. Completely drop the envelope from display view space after animations finish
         setTimeout(() => {
             this.envelopeCover.style.display = 'none';
         }, 1000);
@@ -46,10 +40,9 @@ class WooowInvitationPageObject {
         this.audioElement.play()
             .then(() => {
                 this.isAudioPlaying = true;
-                this.audioToggleButton.textContent = "⏸ Pause Music";
-                this.audioToggleButton.classList.remove('animate-pulse');
+                if(this.audioToggleButton) this.audioToggleButton.textContent = "⏸ Pause Music";
             })
-            .catch(error => console.warn("Audio autoplay blocked by browser settings: ", error));
+            .catch(error => console.warn("Audio autoplay blocked: ", error));
     }
 
     toggleAudioEngineState() {
@@ -71,10 +64,6 @@ class WooowInvitationPageObject {
 
             if (distance < 0) {
                 if (this.countdownInterval) clearInterval(this.countdownInterval);
-                const container = document.querySelector('.countdown-container');
-                if (container) {
-                    container.innerHTML = "<p class='wedding-day-passed'>The Big Day Has Arrived! 🎉</p>";
-                }
                 return;
             }
 
@@ -94,67 +83,75 @@ class WooowInvitationPageObject {
         this.countdownInterval = setInterval(calculateTimeRemaining, 1000);
     }
 
-    initializeScratchSurface(maskColor = '#d4af37', surfaceCaption = 'SCRATCH HERE ✨') {
-        if (!this.scratchCanvas || !this.ctx) return;
+    /**
+     * Loops through and configures the 3 independent round canvas layers
+     */
+    initializeScratchSurface() {
+        this.coins.forEach(coin => {
+            if (!coin.canvas) return;
+            coin.ctx = coin.canvas.getContext('2d');
+            
+            const renderCoinSurface = () => {
+                const diameter = coin.wrapper.offsetWidth;
+                coin.canvas.width = diameter;
+                coin.canvas.height = diameter;
 
-        const syncCanvasBounds = () => {
-            this.scratchCanvas.width = this.scratchWrapper.offsetWidth;
-            this.scratchCanvas.height = this.scratchWrapper.offsetHeight;
-            this.ctx.fillStyle = maskColor;
-            this.ctx.fillRect(0, 0, this.scratchCanvas.width, this.scratchCanvas.height);
-            this.ctx.fillStyle = '#ffffff';
-            this.ctx.font = 'bold 15px "Cinzel", serif';
-            this.ctx.textBaseline = 'middle';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText(surfaceCaption, this.scratchCanvas.width / 2, this.scratchCanvas.height / 2);
-            this.ctx.globalCompositeOperation = 'destination-out';
+                // Render metallic gold radial gradients matching the reference coin details
+                let goldGrad = coin.ctx.createRadialGradient(diameter/3, diameter/3, 5, diameter/2, diameter/2, diameter/2);
+                goldGrad.addColorStop(0, '#f9e49b');
+                goldGrad.addColorStop(0.5, '#d4af37');
+                goldGrad.addColorStop(1, '#aa7c11');
+
+                coin.ctx.fillStyle = goldGrad;
+                coin.ctx.beginPath();
+                coin.ctx.arc(diameter/2, diameter/2, diameter/2, 0, Math.PI * 2);
+                coin.ctx.fill();
+
+                coin.ctx.globalCompositeOperation = 'destination-out';
+            };
+
+            renderCoinSurface();
+            this.wireUpCoinListeners(coin);
+        });
+    }
+
+    wireUpCoinListeners(coin) {
+        const startScratch = (e) => { 
+            this.isScratchingActive = true; 
+            scratchAction(e); 
+        };
+        const stopScratch = () => { 
+            this.isScratchingActive = false; 
+            coin.ctx.beginPath(); 
+        };
+        
+        const scratchAction = (pointerEvent) => {
+            if (!this.isScratchingActive) return;
+            const bounds = coin.canvas.getBoundingClientRect();
+            
+            // Track inputs relative to independent event scopes
+            const clientX = pointerEvent.clientX || pointerEvent.touches[0].clientX;
+            const clientY = pointerEvent.clientY || pointerEvent.touches[0].clientY;
+            
+            const computedX = clientX - bounds.left;
+            const computedY = clientY - bounds.top;
+
+            coin.ctx.lineWidth = 30; // Eraser brush scale size configuration
+            coin.ctx.lineCap = 'round';
+            coin.ctx.lineJoin = 'round';
+            coin.ctx.lineTo(computedX, computedY);
+            coin.ctx.stroke();
+            coin.ctx.beginPath();
+            coin.ctx.moveTo(computedX, computedY);
         };
 
-        syncCanvasBounds();
-        window.addEventListener('resize', syncCanvasBounds);
-        this.wireUpScratchInteractionListeners();
-    }
+        // Pointer event mapping routes
+        coin.canvas.addEventListener('mousedown', startScratch);
+        coin.canvas.addEventListener('mousemove', scratchAction);
+        window.addEventListener('mouseup', stopScratch);
 
-    wireUpScratchInteractionListeners() {
-        this.scratchCanvas.addEventListener('mousedown', (e) => this.initiateScratchCycle(e));
-        this.scratchCanvas.addEventListener('mousemove', (e) => this.processScratchAction(e));
-        window.addEventListener('mouseup', () => this.terminateScratchCycle());
-
-        this.scratchCanvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            this.initiateScratchCycle(e.touches[0]);
-        }, { passive: false });
-
-        this.scratchCanvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            this.processScratchAction(e.touches[0]);
-        }, { passive: false });
-
-        window.addEventListener('touchend', () => this.terminateScratchCycle());
-    }
-
-    initiateScratchCycle(pointerCoordinateSource) {
-        this.isScratchingActive = true;
-        this.processScratchAction(pointerCoordinateSource);
-    }
-
-    processScratchAction(pointerCoordinateSource) {
-        if (!this.isScratchingActive) return;
-        const bounds = this.scratchCanvas.getBoundingClientRect();
-        const computedX = pointerCoordinateSource.clientX - bounds.left;
-        const computedY = pointerCoordinateSource.clientY - bounds.top;
-
-        this.ctx.lineWidth = 40;
-        this.ctx.lineCap = 'round';
-        this.ctx.lineJoin = 'round';
-        this.ctx.lineTo(computedX, computedY);
-        this.ctx.stroke();
-        this.ctx.beginPath();
-        this.ctx.moveTo(computedX, computedY);
-    }
-
-    terminateScratchCycle() {
-        this.isScratchingActive = false;
-        this.ctx.beginPath();
+        coin.canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startScratch(e); }, { passive: false });
+        coin.canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratchAction(e); }, { passive: false });
+        window.addEventListener('touchend', stopScratch);
     }
 }
