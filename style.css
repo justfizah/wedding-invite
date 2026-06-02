@@ -1,20 +1,318 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Instantiate Core POM mapping layout view context
-    const InvitationView = new WooowInvitationPageObject();
+/* ==========================================================================
+   Master Layout, Reset & Sizing Rules
+   ========================================================================== */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f3f3f3; /* Desktop surrounding background */
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
-    // Bind Envelope open event routines to Wax Seal click layer
-    InvitationView.waxSealButton.addEventListener('click', () => {
-        InvitationView.openEnvelopeSequence();
-    });
+/* This container acts as the rigid mobile frame sandbox (like a phone screen) */
+.invitation-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Keeps hidden sections completely contained */
+}
 
-    // Audio Play/Pause trigger handler routing
-    InvitationView.audioToggleButton.addEventListener('click', () => {
-        InvitationView.toggleAudioEngineState();
-    });
+/* ==========================================================================
+   LAYER A: Envelope Cover View (Locks over the screen)
+   ========================================================================== */
+.envelope-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fdfbf7 url('envelope-bg.png') no-repeat center center;
+    background-size: cover;
+    z-index: 100; /* Forces it to sit strictly on top of everything else */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1.0s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
 
-    // Initialize HTML5 Canvas Overlay Surface properties
-    InvitationView.initializeScratchSurface('#cfb53b', '✨ SCRATCH TO REVEAL ✨');
+.envelope-interaction-zone {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 
-    // INITIALIZE TIMING ENGINE: Target date parameter assigned to April 1st, 2027
-    InvitationView.startCountdownEngine('April 1, 2027 16:00:00');
-});
+/* Aligns the script typography text over your pink wax seal graphic image spot */
+.wax-seal-hotspot {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-20px); 
+    animation: floatingPulse 2.5s infinite ease-in-out;
+}
+
+.custom-script-monogram {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 55px;
+    font-weight: 500;
+    color: rgba(144, 76, 86, 0.9); 
+    user-select: none;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.envelope-tap-caption {
+    position: absolute;
+    bottom: 15%;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #a29986;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Smooth exit animation state */
+.envelope-overlay.fade-slide-out {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   LAYER B: Inside Invitation Card Deck View
+   ========================================================================== */
+.main-invite-deck {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 35px 25px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    overflow-y: auto; /* Enables inner scrolling inside the phone card framework */
+    scrollbar-width: none; 
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.main-invite-deck::-webkit-scrollbar { display: none; }
+
+/* Hides the inside content card layout until the envelope seal is clicked */
+.hidden-view {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* Reveals the inside content card layout smoothly */
+.main-invite-deck.fade-slide-in {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* Global Music Pill Button Layout */
+.audio-control-pill {
+    background: #ffffff;
+    border: 1px solid #d4af37;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #635332;
+    margin-bottom: -10px;
+}
+
+.header-preamble {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #a38e6b;
+    margin: 0 0 8px;
+}
+
+.couple-headline {
+    font-size: 36px;
+    font-weight: 400;
+    color: #2c2519;
+    margin: 0;
+}
+
+.divider-accent {
+    color: #d4af37;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Interactive Scratch Canvas Layout Rules
+   ========================================================================== */
+.scratch-reveal-block {
+    width: 100%;
+}
+
+.scratch-prompt {
+    font-style: italic;
+    font-size: 14px;
+    color: #7a6e58;
+    margin: 0 0 12px;
+}
+
+.scratch-canvas-container {
+    position: relative;
+    width: 300px;
+    height: 160px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(163, 142, 107, 0.12);
+}
+
+/* The true secret layer fixed underneath the scratch overlay */
+.underlying-revealed-data {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fffdfa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Sits underneath */
+}
+
+.revealed-date {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: #8c733e;
+    margin: 0 0 4px;
+    font-weight: 600;
+}
+
+.revealed-location {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #4a4235;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+}
+
+.revealed-badge {
+    font-size: 11px;
+    font-style: italic;
+    color: #a38e6b;
+    border-top: 1px solid #eadeca;
+    padding-top: 6px;
+    width: 75%;
+}
+
+/* The golden interactive canvas mask layer blocking the data views */
+#scratchCanvasMask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5; /* Sits directly on top of text details */
+    touch-action: none; 
+}
+
+/* ==========================================================================
+   Venue & Active Countdown Components
+   ========================================================================== */
+.venue-location-block {
+    width: 100%;
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #2c2519;
+    margin: 0 0 4px;
+    text-transform: uppercase;
+}
+
+.venue-name {
+    font-size: 13px;
+    font-style: italic;
+    color: #7a6e58;
+    margin: 0 0 12px;
+}
+
+.map-iframe-wrapper {
+    width: 100%;
+    height: 140px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eae1d4;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.countdown-box {
+    background: #ffffff;
+    border: 1px solid #eadeca;
+    border-radius: 8px;
+    min-width: 65px;
+    padding: 10px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(163, 142, 107, 0.06);
+}
+
+.countdown-box span {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #8c733e;
+}
+
+.countdown-box label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a39988;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   Keyframe Transitions
+   ========================================================================== */
+@keyframes floatingPulse {
+    0% { transform: translateY(-20px) scale(1); }
+    50% { transform: translateY(-25px) scale(1.03); }
+    100% { transform: translateY(-20px) scale(1); }
+}
+
+.animate-pulse {
+    animation: buttonPulse 2s infinite ease-in-out;
+}
+
+@keyframes buttonPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+}
