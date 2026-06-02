@@ -4,33 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date - Oliver & Sophia</title>
-    <!-- Premium Google Fonts matching the WooowInvites layout profile -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Embedded Ambient Audio Source Engine Layer -->
     <audio id="inviteAudio" loop>
-        <source src="song.mp3" type="audio/mpeg">
+        <source src="wedding-ambient-track.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Master Container Stack wrapper -->
     <div class="invitation-wrapper">
         
-        <!-- LAYER A: Interactive Opening Envelope Cover Component -->
         <div id="envelopeCover" class="envelope-overlay active">
             <div class="envelope-card">
-                <div class="floating-seal-element" id="waxSealButton">
-                    <span class="seal-icon">✉</span>
+                <div class="envelope-flap"></div>
+                <div id="waxSealButton" class="wax-seal-container">
+                    <div class="wax-seal-base">
+                        <div class="wax-seal-inner">
+                            <span class="wax-monogram">W</span>
+                        </div>
+                    </div>
                     <p class="seal-caption">TAP TO OPEN</p>
                 </div>
             </div>
         </div>
 
-        <!-- LAYER B: The Core Inner Hidden Invitation Deck View -->
         <main id="invitationContentDeck" class="main-invite-deck hidden-view">
-            <!-- Global Floating Controller Components -->
             <button id="audioToggle" class="audio-control-pill animate-pulse">🎵 Play Music</button>
             
             <header class="invite-intro">
@@ -39,25 +38,43 @@
                 <div class="divider-accent">✦</div>
             </header>
 
-            <!-- Dynamic Interactive Scratch Layer Section -->
+            <section class="countdown-container">
+                <div class="countdown-box"><span id="days">00</span><label>Days</label></div>
+                <div class="countdown-box"><span id="hours">00</span><label>Hrs</label></div>
+                <div class="countdown-box"><span id="minutes">00</span><label>Min</label></div>
+                <div class="countdown-box"><span id="seconds">00</span><label>Sec</label></div>
+            </section>
+
             <section class="scratch-reveal-block">
                 <p class="scratch-prompt">👇 Scratch below to reveal our special date!</p>
-                
                 <div class="scratch-canvas-container" id="scratchCanvasWrapper">
-                    <!-- Beneath Layer: Revealed Event Metadata Details View -->
                     <div class="underlying-revealed-data">
                         <h2 class="revealed-date">OCTOBER 24, 2026</h2>
                         <p class="revealed-location">PARIS, FRANCE</p>
                         <span class="revealed-badge">Formal Invitation to Follow</span>
                     </div>
-                    <!-- Face Layer: Canvas Scratch Layer Surface -->
                     <canvas id="scratchCanvasMask"></canvas>
+                </div>
+            </section>
+
+            <section class="venue-location-block">
+                <h3 class="section-title">The Venue</h3>
+                <p class="venue-name">Château de Versailles, Paris</p>
+                <div class="map-iframe-wrapper">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.931757835154!2d2.1181665773822166!3d48.804864871325325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e67db475f412c1%3A0x600100a7479ee883!2sCh%C3%A2teau%20de%20Versailles!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Application Initialization Scripts -->
     <script src="WeddingPageObject.js"></script>
     <script src="app.js"></script>
 </body>
