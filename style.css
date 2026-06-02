@@ -108,14 +108,26 @@ body, html {
 }
 
 /* 1. Hero Illustration Banner Styling Area */
+/* ==========================================================================
+   UPDATED: Force Instant Render on Mobile Load
+   ========================================================================== */
 .hero-illustration-banner {
+    display: block; /* Change from flex to block to prevent browser layout lag */
     width: 100%;
-    height: 320px;
-    background: url('scenic-balcony.png') no-repeat center bottom;
+    height: 260px;
+    
+    /* Combine both the image and the gradient fallback cleanly into one rule */
+    background: url('scenic-balcony.png') no-repeat center bottom, 
+                linear-gradient(to bottom, #bce3ebd9 0%, #f7d6cbd4 70%, #df999ba6 100%);
     background-size: cover;
+    
     position: relative;
-    display: flex;
-    justify-content: center;
+    flex-shrink: 0;
+    
+    /* Force Hardware Acceleration: This tricks the browser into rendering 
+       the element instantly behind the scenes on load, instead of waiting for a resize */
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .hero-caption-box {
