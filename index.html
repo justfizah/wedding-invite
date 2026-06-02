@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date - Ayodeji & Aisha</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,23 +20,61 @@
                 <div class="wax-seal-hotspot">
                     <span class="custom-script-monogram"></span>
                 </div>
-                <p class="envelope-tap-caption"></p>
+                <p class="envelope-tap-caption">TAP TO OPEN</p>
             </div>
         </div>
 
         <main id="invitationContentDeck" class="main-invite-deck hidden-view">
-            <button id="audioToggle" class="audio-control-pill animate-pulse">🎵 Play Music</button>
             
-            <header class="invite-intro">
-                <p class="header-preamble">SAVE THE DATE</p>
-                <h1 class="couple-headline">Ayodeji & Aisha</h1>
-                <div class="divider-accent">✦</div>
-            </header>
+            <section class="hero-illustration-banner">
+                <div class="hero-caption-box">
+                    <span class="hero-pretitle">Save the Date</span>
+                </div>
+            </section>
 
-            <section class="venue-location-block">
-                <h3 class="section-title">The Venue</h3>
-                <p class="venue-name">Château de Versailles, Paris</p>
-                <div class="map-iframe-wrapper">
+            <section class="couple-details-block">
+                <h1 class="couple-main-title">Ayodeji & Aisha</h1>
+                <button id="audioToggle" class="audio-control-pill">🎵</button>
+            </section>
+
+            <section class="scratch-coins-wrapper">
+                <div class="scratch-instruction-row">
+                    <span class="finger-icon">☝</span>
+                    <p>SCRATCH TO DISCOVER THE DATE</p>
+                </div>
+                <h2 class="reveal-header">Reveal</h2>
+                
+                <div class="coins-flex-row">
+                    <div class="coin-container-box" id="coinWrapper1">
+                        <div class="secret-data-node"><span>01</span><label>APRIL</label></div>
+                        <canvas id="coinCanvas1"></canvas>
+                    </div>
+                    <div class="coin-container-box" id="coinWrapper2">
+                        <div class="secret-data-node"><span>THU</span><label>DAY</label></div>
+                        <canvas id="coinCanvas2"></canvas>
+                    </div>
+                    <div class="coin-container-box" id="coinWrapper3">
+                        <div class="secret-data-node"><span>2027</span><label>YEAR</label></div>
+                        <canvas id="coinCanvas3"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="textured-countdown-block">
+                <h3 class="countdown-section-heading">Countdown</h3>
+                <p class="countdown-subtext">Until the most special day of our lives</p>
+                
+                <div class="countdown-grid-row">
+                    <div class="parchment-box"><span id="days">00</span><label>DAYS</label></div>
+                    <div class="parchment-box"><span id="hours">00</span><label>HOURS</label></div>
+                    <div class="parchment-box"><span id="minutes">00</span><label>MINUTES</label></div>
+                    <div class="parchment-box"><span id="seconds">00</span><label>SECONDS</label></div>
+                </div>
+            </section>
+
+            <section class="venue-map-showcase">
+                <span class="venue-pill-tag">YOU'RE INVITED TO</span>
+                <div class="embedded-map-frame-card">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2629.931757835154!2d2.1181665773822166!3d48.804864871325325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e67db475f412c1%3A0x600100a7479ee883!2sCh%C3%A2teau%20de%20Versailles!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s" 
                         width="100%" 
@@ -47,26 +85,10 @@
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
+                <h4 class="venue-footer-title">Norwich</h4>
+                <p class="venue-disclaimer">Invitation details coming soon</p>
             </section>
 
-            <section class="scratch-reveal-block">
-                <p class="scratch-prompt">👇 Scratch below to reveal our special date!</p>
-                <div class="scratch-canvas-container" id="scratchCanvasWrapper">
-                    <div class="underlying-revealed-data">
-                        <h2 class="revealed-date">APRIL 1, 2027</h2>
-                        <p class="revealed-location">PARIS, FRANCE</p>
-                        <span class="revealed-badge">Formal Invitation to Follow</span>
-                    </div>
-                    <canvas id="scratchCanvasMask"></canvas>
-                </div>
-            </section>
-
-            <section class="countdown-container">
-                <div class="countdown-box"><span id="days">00</span><label>Days</label></div>
-                <div class="countdown-box"><span id="hours">00</span><label>Hrs</label></div>
-                <div class="countdown-box"><span id="minutes">00</span><label>Min</label></div>
-                <div class="countdown-box"><span id="seconds">00</span><label>Sec</label></div>
-            </section>
         </main>
     </div>
 
