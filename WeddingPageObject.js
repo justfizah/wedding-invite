@@ -1,7 +1,3 @@
-/**
- * Page Object Class pattern abstraction mirroring the 
- * interactive design mechanics of digital premium templates.
- */
 class WooowInvitationPageObject {
     constructor() {
         // UI DOM Element Bindings
@@ -21,30 +17,31 @@ class WooowInvitationPageObject {
         this.secondsSpan = document.getElementById('seconds');
         this.countdownInterval = null;
 
-        // Core App Tracking States
         this.isScratchingActive = false;
         this.isAudioPlaying = false;
     }
 
     /**
-     * Executes the envelope cover reveal sequence animations
+     * Handles switching from the Envelope page to the main invitation card
      */
     openEnvelopeSequence() {
+        // 1. Slide up and fade out the envelope cover layer
+        this.envelopeCover.classList.remove('active');
         this.envelopeCover.classList.add('fade-slide-out');
+        
+        // 2. Smoothly reveal the inner content deck
         this.invitationContentDeck.classList.remove('hidden-view');
         this.invitationContentDeck.classList.add('fade-slide-in');
         
+        // 3. Kick off the background audio stream
         this.startBackgroundAudio();
         
-        // Cleanup envelope layer from active DOM layout structure after fade finishes
+        // 4. Completely drop the envelope from display view space after animations finish
         setTimeout(() => {
             this.envelopeCover.style.display = 'none';
-        }, 1200);
+        }, 1000);
     }
 
-    /**
-     * Background Music Core Audio Engine Mechanics
-     */
     startBackgroundAudio() {
         this.audioElement.play()
             .then(() => {
@@ -52,7 +49,7 @@ class WooowInvitationPageObject {
                 this.audioToggleButton.textContent = "⏸ Pause Music";
                 this.audioToggleButton.classList.remove('animate-pulse');
             })
-            .catch(error => console.warn("Browser context blocked audio autoplay pipeline: ", error));
+            .catch(error => console.warn("Audio autoplay blocked by browser settings: ", error));
     }
 
     toggleAudioEngineState() {
@@ -65,10 +62,6 @@ class WooowInvitationPageObject {
         }
     }
 
-    /**
-     * Dynamic Time Tracking Calculation Engine
-     * @param {String} targetDateString - Target Date (e.g., 'April 1, 2027 16:00:00')
-     */
     startCountdownEngine(targetDateString) {
         const targetTime = new Date(targetDateString).getTime();
 
@@ -76,7 +69,6 @@ class WooowInvitationPageObject {
             const computeNow = new Date().getTime();
             const distance = targetTime - computeNow;
 
-            // If the date passes, clear countdown loop dynamically
             if (distance < 0) {
                 if (this.countdownInterval) clearInterval(this.countdownInterval);
                 const container = document.querySelector('.countdown-container');
@@ -86,13 +78,11 @@ class WooowInvitationPageObject {
                 return;
             }
 
-            // Calculation mapping for standard time metrics
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Injects values back to interface layer nodes with double-digit padding rules
             if (this.daysSpan) this.daysSpan.textContent = String(days).padStart(2, '0');
             if (this.hoursSpan) this.hoursSpan.textContent = String(hours).padStart(2, '0');
             if (this.minutesSpan) this.minutesSpan.textContent = String(minutes).padStart(2, '0');
@@ -100,34 +90,23 @@ class WooowInvitationPageObject {
         };
 
         if (this.countdownInterval) clearInterval(this.countdownInterval);
-
-        // Execute immediately to skip initial 1-second process block loop delay
         calculateTimeRemaining();
         this.countdownInterval = setInterval(calculateTimeRemaining, 1000);
     }
 
-    /**
-     * Responsive Scratch Mask Canvas Framework Setup
-     */
     initializeScratchSurface(maskColor = '#d4af37', surfaceCaption = 'SCRATCH HERE ✨') {
         if (!this.scratchCanvas || !this.ctx) return;
 
         const syncCanvasBounds = () => {
             this.scratchCanvas.width = this.scratchWrapper.offsetWidth;
             this.scratchCanvas.height = this.scratchWrapper.offsetHeight;
-
-            // Render background overlay color block
             this.ctx.fillStyle = maskColor;
             this.ctx.fillRect(0, 0, this.scratchCanvas.width, this.scratchCanvas.height);
-
-            // Print descriptive text on top of scratch surface
             this.ctx.fillStyle = '#ffffff';
             this.ctx.font = 'bold 15px "Cinzel", serif';
             this.ctx.textBaseline = 'middle';
             this.ctx.textAlign = 'center';
             this.ctx.fillText(surfaceCaption, this.scratchCanvas.width / 2, this.scratchCanvas.height / 2);
-
-            // Enforce destination-out erase blending mode
             this.ctx.globalCompositeOperation = 'destination-out';
         };
 
@@ -137,12 +116,10 @@ class WooowInvitationPageObject {
     }
 
     wireUpScratchInteractionListeners() {
-        // Desktop Pointer Event Triggers
         this.scratchCanvas.addEventListener('mousedown', (e) => this.initiateScratchCycle(e));
         this.scratchCanvas.addEventListener('mousemove', (e) => this.processScratchAction(e));
         window.addEventListener('mouseup', () => this.terminateScratchCycle());
 
-        // Mobile Device High-Responsiveness Touch Trackers
         this.scratchCanvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.initiateScratchCycle(e.touches[0]);
@@ -163,15 +140,13 @@ class WooowInvitationPageObject {
 
     processScratchAction(pointerCoordinateSource) {
         if (!this.isScratchingActive) return;
-
         const bounds = this.scratchCanvas.getBoundingClientRect();
         const computedX = pointerCoordinateSource.clientX - bounds.left;
         const computedY = pointerCoordinateSource.clientY - bounds.top;
 
-        this.ctx.lineWidth = 40; // Diameter brush stroke thickness line parameter
+        this.ctx.lineWidth = 40;
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';
-
         this.ctx.lineTo(computedX, computedY);
         this.ctx.stroke();
         this.ctx.beginPath();
