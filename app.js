@@ -16,5 +16,5 @@ document.addEventListener("DOMContentLoaded", () => {
     InvitationView.initializeScratchSurface('#cfb53b', '✨ SCRATCH TO REVEAL ✨');
 
     // INITIALIZE TIMING ENGINE: Set to April 1st, 2027
-    InvitationView.startCountdownEngine('April 1, 2027 16:00:00');
+    InvitationView.startCountdownEngine('April 3, 2027 16:00:00');
 });
