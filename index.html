@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save the Date - Oliver & Sophia</title>
+    <!-- Premium Google Fonts matching the WooowInvites layout profile -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Embedded Ambient Audio Source Engine Layer -->
+    <audio id="inviteAudio" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Master Container Stack wrapper -->
+    <div class="invitation-wrapper">
+        
+        <!-- LAYER A: Interactive Opening Envelope Cover Component -->
+        <div id="envelopeCover" class="envelope-overlay active">
+            <div class="envelope-card">
+                <div class="floating-seal-element" id="waxSealButton">
+                    <span class="seal-icon">✉</span>
+                    <p class="seal-caption">TAP TO OPEN</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LAYER B: The Core Inner Hidden Invitation Deck View -->
+        <main id="invitationContentDeck" class="main-invite-deck hidden-view">
+            <!-- Global Floating Controller Components -->
+            <button id="audioToggle" class="audio-control-pill animate-pulse">🎵 Play Music</button>
+            
+            <header class="invite-intro">
+                <p class="header-preamble">SAVE THE DATE</p>
+                <h1 class="couple-headline">Oliver & Sophia</h1>
+                <div class="divider-accent">✦</div>
+            </header>
+
+            <!-- Dynamic Interactive Scratch Layer Section -->
+            <section class="scratch-reveal-block">
+                <p class="scratch-prompt">👇 Scratch below to reveal our special date!</p>
+                
+                <div class="scratch-canvas-container" id="scratchCanvasWrapper">
+                    <!-- Beneath Layer: Revealed Event Metadata Details View -->
+                    <div class="underlying-revealed-data">
+                        <h2 class="revealed-date">OCTOBER 24, 2026</h2>
+                        <p class="revealed-location">PARIS, FRANCE</p>
+                        <span class="revealed-badge">Formal Invitation to Follow</span>
+                    </div>
+                    <!-- Face Layer: Canvas Scratch Layer Surface -->
+                    <canvas id="scratchCanvasMask"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Application Initialization Scripts -->
+    <script src="WeddingPageObject.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
