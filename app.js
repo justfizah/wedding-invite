@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         InvitationView.toggleAudioEngineState();
     });
 
-    // Initialize HTML5 Canvas Overlay Surface properties
+    // Initialize HTML5 Canvas Overlay Surface properties (The Scratch Box color)
     InvitationView.initializeScratchSurface('#cfb53b', '✨ SCRATCH TO REVEAL ✨');
 
-    // INITIALIZE TIMING ENGINE: Target date parameter assigned to April 1st, 2027
+    // INITIALIZE TIMING ENGINE: Set to April 1st, 2027
     InvitationView.startCountdownEngine('April 1, 2027 16:00:00');
 });
