@@ -1,86 +1,20 @@
-/* ==========================================================================
-   New Grid Additions: Countdown & Location Component Theme Rules
-   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    // Instantiate Core POM mapping layout view context
+    const InvitationView = new WooowInvitationPageObject();
 
-/* Countdown Grid Dashboard Container */
-.countdown-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-    width: 100%;
-}
+    // Bind Envelope open event routines to Wax Seal click layer
+    InvitationView.waxSealButton.addEventListener('click', () => {
+        InvitationView.openEnvelopeSequence();
+    });
 
-.countdown-box {
-    background: #fdfbf7;
-    border: 1px solid #eae1d4;
-    border-radius: 8px;
-    min-width: 65px;
-    padding: 10px 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(163, 142, 107, 0.06);
-}
+    // Audio Play/Pause trigger handler routing
+    InvitationView.audioToggleButton.addEventListener('click', () => {
+        InvitationView.toggleAudioEngineState();
+    });
 
-.countdown-box span {
-    font-family: 'Cinzel', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: #8c733e;
-}
+    // Initialize HTML5 Canvas Overlay Surface properties
+    InvitationView.initializeScratchSurface('#cfb53b', '✨ SCRATCH TO REVEAL ✨');
 
-.countdown-box label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #8a8172;
-    margin-top: 4px;
-}
-
-.wedding-day-passed {
-    font-family: 'Cinzel', serif;
-    font-size: 18px;
-    color: #8c733e;
-    letter-spacing: 1px;
-}
-
-/* Location Map Component Styling */
-.venue-location-block {
-    width: 100%;
-    margin-top: 15px;
-}
-
-.section-title {
-    font-family: 'Cinzel', serif;
-    font-size: 18px;
-    letter-spacing: 2px;
-    color: #2c2519;
-    margin: 0 0 4px;
-    text-transform: uppercase;
-}
-
-.venue-name {
-    font-size: 14px;
-    font-style: italic;
-    color: #7a6e58;
-    margin: 0 0 15px;
-}
-
-.map-iframe-wrapper {
-    width: 100%;
-    height: 180px;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #eae1d4;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-}
-
-/* Enhances inner framework scrolling inside mobile wrapper constraints */
-.main-invite-deck {
-    overflow-y: auto;
-    scrollbar-width: none; /* Hide standard scroll tracks on Firefox */
-}
-.main-invite-deck::-webkit-scrollbar {
-    display: none; /* Hide scrollbars on Safari/Chrome engines */
-}
+    // INITIALIZE TIMING ENGINE: Target date parameter assigned to April 1st, 2027
+    InvitationView.startCountdownEngine('April 1, 2027 16:00:00');
+});
