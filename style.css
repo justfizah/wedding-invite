@@ -34,7 +34,7 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fdfbf7 url('envelope-bg.png') no-repeat center center;
+    background: #fdfbf7 url('envelop.png') no-repeat center center;
     background-size: cover;
     z-index: 100; /* Forces it to sit strictly on top of everything else */
     display: flex;
