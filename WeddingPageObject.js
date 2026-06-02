@@ -40,7 +40,7 @@ class WooowInvitationPageObject {
         this.audioElement.play()
             .then(() => {
                 this.isAudioPlaying = true;
-                if(this.audioToggleButton) this.audioToggleButton.textContent = "⏸ Pause Music";
+                if(this.audioToggleButton) this.audioToggleButton.textContent = "🔇Pause Music";
             })
             .catch(error => console.warn("Audio autoplay blocked: ", error));
     }
