@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date - Aisha & Ayodeji</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,7 +29,7 @@
             
             <section class="hero-illustration-banner">
                 <div class="hero-caption-box">
-                    <span class="hero-pretitle"><center>Save the Date</center></span>
+                    <span class="hero-pretitle">Save the Date</span>
                 </div>
             </section>
 
@@ -75,24 +76,85 @@
             <section class="venue-map-showcase">
                 <span class="venue-pill-tag">YOU'RE INVITED TO</span>
                 <div class="embedded-map-frame-card">
-                    <iframe 
-                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63428.16335345719!2d3.4470984950664875!3d6.488653995804561!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e67db475f412c1%3A0x600100a7479ee883!2sLekki%2C%20Lagos%2C%20Nigeria!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                    <div id="venueMap" style="width:100%;height:100%;"></div>
                 </div>
                 <h4 class="venue-footer-title">Lagos</h4>
-                <p class="venue-disclaimer">Invitation details coming soon</p>
+                <p class="venue-disclaimer">La Madison Place Block 2, Plot 1, Okunade Bluewaters Scheme, Lekki Peninsula, Lagos State.</p>
             </section>
 
         </main>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="WeddingPageObject.js"></script>
     <script src="app.js"></script>
+    <script>
+        // Beautiful Leaflet map — La Madison Place, Lekki, Lagos
+        (function initVenueMap() {
+            const LAT = 6.4244185;
+            const LNG = 3.460961;
+
+            const map = L.map('venueMap', {
+                center: [LAT, LNG],
+                zoom: 16,
+                zoomControl: false,
+                scrollWheelZoom: false,
+                dragging: false,
+                doubleClickZoom: false,
+                attributionControl: false
+            });
+
+            // CartoDB Voyager — clean, modern, elegant tiles
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+
+            // Custom heart/ring SVG marker
+            const heartIcon = L.divIcon({
+                className: '',
+                html: `
+                    <div style="
+                        display:flex;flex-direction:column;align-items:center;
+                        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+                    ">
+                        <div style="
+                            width:38px;height:38px;background:linear-gradient(135deg,#c47a85,#8b2035);
+                            border-radius:50%;border:3px solid #fff;
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:18px;box-shadow:0 0 0 4px rgba(196,122,133,0.3);
+                        ">💍</div>
+                        <div style="
+                            width:2px;height:12px;background:#8b2035;
+                            margin-top:-1px;
+                        "></div>
+                        <div style="
+                            width:8px;height:5px;
+                            border-left:4px solid transparent;border-right:4px solid transparent;
+                            border-top:7px solid #8b2035;
+                        "></div>
+                    </div>`,
+                iconSize: [40, 60],
+                iconAnchor: [20, 60],
+                popupAnchor: [0, -65]
+            });
+
+            const marker = L.marker([LAT, LNG], { icon: heartIcon }).addTo(map);
+
+            marker.bindPopup(`
+                <div style="
+                    font-family:'Cormorant Garamond',serif;text-align:center;
+                    padding:6px 10px;min-width:160px;
+                ">
+                    <div style="font-size:13px;font-weight:600;color:#8b2035;margin-bottom:4px;">La Madison Place</div>
+                    <div style="font-size:11px;color:#666;line-height:1.5;">Okunade Bluewaters Scheme<br>Lekki Peninsula, Lagos</div>
+                    <a href="https://maps.google.com/?q=6.4244185,3.460961" target="_blank"
+                       style="display:inline-block;margin-top:8px;font-size:10px;color:#8b2035;
+                              letter-spacing:1px;text-transform:uppercase;text-decoration:none;
+                              border-bottom:1px solid #8b2035;padding-bottom:1px;">Get Directions →</a>
+                </div>`, { maxWidth: 200 }
+            ).openPopup();
+        })();
+    </script>
 </body>
 </html>

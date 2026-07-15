@@ -112,33 +112,39 @@ body, html {
    UPDATED: Force Instant Render on Mobile Load
    ========================================================================== */
 .hero-illustration-banner {
-    display: block; /* Change from flex to block to prevent browser layout lag */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 260px;
+    aspect-ratio: 800 / 955;
     
-    /* Combine both the image and the gradient fallback cleanly into one rule */
-    background: url('scenic-balcony.png') no-repeat center bottom, 
-                linear-gradient(to bottom, #bce3ebd9 0%, #f7d6cbd4 70%, #df999ba6 100%);
+    background: url('scenic-balcony.png') no-repeat center center;
     background-size: cover;
     
     position: relative;
     flex-shrink: 0;
     
-    /* Force Hardware Acceleration: This tricks the browser into rendering 
-       the element instantly behind the scenes on load, instead of waiting for a resize */
     transform: translateZ(0);
     will-change: transform;
 }
 
 .hero-caption-box {
-    position: absolute;
-    top: 35%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .hero-pretitle {
     font-family: 'Pinyon Script', cursive;
-    font-size: 45px;
-    color: #cda291; /* Soft metallic rose gold matching reference image text colour */
+    font-size: 64px;
+    color: #ffffff;
+    text-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(255, 255, 255, 0.5);
+    display: block;
+    line-height: 1.1;
 }
 
 /* 2. Couple Detail Headings Style Profile */
@@ -337,11 +343,11 @@ body, html {
 
 .embedded-map-frame-card {
     width: 100%;
-    height: 180px;
-    border-radius: 16px;
+    height: 240px;
+    border-radius: 18px;
     overflow: hidden;
-    border: 1px solid #ebdcc5;
-    box-shadow: 0 10px 25px rgba(163, 142, 107, 0.08);
+    border: 1px solid #e2cdb5;
+    box-shadow: 0 12px 35px rgba(139, 32, 53, 0.12), 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .venue-footer-title {
