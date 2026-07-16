@@ -12,15 +12,7 @@ class WooowInvitationPageObject {
         this.minutesSpan = document.getElementById('minutes');
         this.secondsSpan = document.getElementById('seconds');
         this.countdownInterval = null;
-
-        // Dynamic Coins Arrays Definition Mapping
-        this.coins = [
-            { id: 1, canvas: document.getElementById('coinCanvas1'), wrapper: document.getElementById('coinWrapper1'), ctx: null },
-            { id: 2, canvas: document.getElementById('coinCanvas2'), wrapper: document.getElementById('coinWrapper2'), ctx: null },
-            { id: 3, canvas: document.getElementById('coinCanvas3'), wrapper: document.getElementById('coinWrapper3'), ctx: null }
-        ];
         
-        this.isScratchingActive = false;
         this.isAudioPlaying = false;
     }
 
@@ -84,74 +76,129 @@ class WooowInvitationPageObject {
     }
 
     /**
-     * Loops through and configures the 3 independent round canvas layers
+     * Three independent flat gift-box card ribbon unknot reveals.
      */
-    initializeScratchSurface() {
-        this.coins.forEach(coin => {
-            if (!coin.canvas) return;
-            coin.ctx = coin.canvas.getContext('2d');
-            
-            const renderCoinSurface = () => {
-                const diameter = coin.wrapper.offsetWidth;
-                coin.canvas.width = diameter;
-                coin.canvas.height = diameter;
+    initRibbonReveal() {
+        const gifts = [
+            { cardId: 'giftCard1', ribbonId: 'giftRibbon1', bowId: 'giftBow1', pullId: 'giftPull1', dateId: 'giftDate1' },
+            { cardId: 'giftCard2', ribbonId: 'giftRibbon2', bowId: 'giftBow2', pullId: 'giftPull2', dateId: 'giftDate2' },
+            { cardId: 'giftCard3', ribbonId: 'giftRibbon3', bowId: 'giftBow3', pullId: 'giftPull3', dateId: 'giftDate3' }
+        ];
 
-                // Render metallic gold radial gradients matching the reference coin details
-                let goldGrad = coin.ctx.createRadialGradient(diameter/3, diameter/3, 5, diameter/2, diameter/2, diameter/2);
-                goldGrad.addColorStop(0, '#f9e49b');
-                goldGrad.addColorStop(0.5, '#d4af37');
-                goldGrad.addColorStop(1, '#aa7c11');
+        gifts.forEach(({ cardId, ribbonId, bowId, pullId, dateId }) => {
+            const cardEl   = document.getElementById(cardId);
+            const ribbonEl = document.getElementById(ribbonId);
+            const bowEl    = document.getElementById(bowId);
+            const pullEl   = document.getElementById(pullId);
+            const dateEl   = document.getElementById(dateId);
 
-                coin.ctx.fillStyle = goldGrad;
-                coin.ctx.beginPath();
-                coin.ctx.arc(diameter/2, diameter/2, diameter/2, 0, Math.PI * 2);
-                coin.ctx.fill();
+            if (!cardEl || !ribbonEl || !dateEl) return;
 
-                coin.ctx.globalCompositeOperation = 'destination-out';
+            let revealed = false;
+            let isDragging = false;
+            let startY = 0;
+            let currentDY = 0;
+
+            const triggerReveal = () => {
+                if (revealed) return;
+                revealed = true;
+
+                // 1. Hide pull tab immediately
+                if (pullEl) pullEl.classList.add('hidden');
+
+                // 2. Add unknotting animation to the bow (wiggle → loosen/fade)
+                if (bowEl) bowEl.classList.add('unknotting');
+
+                // 3. Ribbon overlay slides down
+                setTimeout(() => {
+                    if (ribbonEl) {
+                        ribbonEl.style.transform = ''; // clear drag offset
+                        ribbonEl.classList.add('sliding-off');
+                    }
+                }, 560);
+
+                // 4. Date rises up/scales in center
+                setTimeout(() => {
+                    dateEl.classList.add('revealed');
+                }, 850);
             };
 
-            renderCoinSurface();
-            this.wireUpCoinListeners(coin);
+            // Bind Tap/Click events on Card, Ribbon, and Bow
+            cardEl.addEventListener('click', triggerReveal);
+            ribbonEl.addEventListener('click', (e) => { e.stopPropagation(); triggerReveal(); });
+            if (bowEl) bowEl.addEventListener('click', (e) => { e.stopPropagation(); triggerReveal(); });
+
+            // Bind Tap/Click on pull tab handle
+            if (pullEl) {
+                pullEl.addEventListener('click', (e) => { e.stopPropagation(); triggerReveal(); });
+
+                // Drag-to-pull implementation (Mouse)
+                pullEl.addEventListener('mousedown', (e) => {
+                    if (revealed) return;
+                    isDragging = true;
+                    startY = e.clientY;
+                    currentDY = 0;
+                    pullEl.style.transition = 'none';
+                    ribbonEl.style.transition = 'none';
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDragging || revealed) return;
+                    currentDY = Math.max(0, e.clientY - startY);
+                    
+                    // Move pull tab and nudge ribbon down slightly on pull tension
+                    pullEl.style.transform = `translateY(${Math.min(currentDY, 25)}px)`;
+                    ribbonEl.style.transform = `translateY(${Math.min(currentDY * 0.2, 5)}px)`;
+                });
+
+                window.addEventListener('mouseup', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    pullEl.style.transition = '';
+                    ribbonEl.style.transition = '';
+
+                    if (currentDY >= 20) {
+                        triggerReveal();
+                    } else {
+                        // Snap back
+                        pullEl.style.transform = '';
+                        ribbonEl.style.transform = '';
+                    }
+                    currentDY = 0;
+                });
+
+                // Drag-to-pull implementation (Touch)
+                pullEl.addEventListener('touchstart', (e) => {
+                    if (revealed) return;
+                    isDragging = true;
+                    startY = e.touches[0].clientY;
+                    currentDY = 0;
+                    pullEl.style.transition = 'none';
+                    ribbonEl.style.transition = 'none';
+                }, { passive: true });
+
+                pullEl.addEventListener('touchmove', (e) => {
+                    if (!isDragging || revealed) return;
+                    currentDY = Math.max(0, e.touches[0].clientY - startY);
+                    pullEl.style.transform = `translateY(${Math.min(currentDY, 25)}px)`;
+                    ribbonEl.style.transform = `translateY(${Math.min(currentDY * 0.2, 5)}px)`;
+                }, { passive: true });
+
+                pullEl.addEventListener('touchend', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    pullEl.style.transition = '';
+                    ribbonEl.style.transition = '';
+
+                    if (currentDY >= 20) {
+                        triggerReveal();
+                    } else {
+                        pullEl.style.transform = '';
+                        ribbonEl.style.transform = '';
+                    }
+                    currentDY = 0;
+                });
+            }
         });
-    }
-
-    wireUpCoinListeners(coin) {
-        const startScratch = (e) => { 
-            this.isScratchingActive = true; 
-            scratchAction(e); 
-        };
-        const stopScratch = () => { 
-            this.isScratchingActive = false; 
-            coin.ctx.beginPath(); 
-        };
-        
-        const scratchAction = (pointerEvent) => {
-            if (!this.isScratchingActive) return;
-            const bounds = coin.canvas.getBoundingClientRect();
-            
-            // Track inputs relative to independent event scopes
-            const clientX = pointerEvent.clientX || pointerEvent.touches[0].clientX;
-            const clientY = pointerEvent.clientY || pointerEvent.touches[0].clientY;
-            
-            const computedX = clientX - bounds.left;
-            const computedY = clientY - bounds.top;
-
-            coin.ctx.lineWidth = 30; // Eraser brush scale size configuration
-            coin.ctx.lineCap = 'round';
-            coin.ctx.lineJoin = 'round';
-            coin.ctx.lineTo(computedX, computedY);
-            coin.ctx.stroke();
-            coin.ctx.beginPath();
-            coin.ctx.moveTo(computedX, computedY);
-        };
-
-        // Pointer event mapping routes
-        coin.canvas.addEventListener('mousedown', startScratch);
-        coin.canvas.addEventListener('mousemove', scratchAction);
-        window.addEventListener('mouseup', stopScratch);
-
-        coin.canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startScratch(e); }, { passive: false });
-        coin.canvas.addEventListener('touchmove', (e) => { e.preventDefault(); scratchAction(e); }, { passive: false });
-        window.addEventListener('touchend', stopScratch);
     }
 }

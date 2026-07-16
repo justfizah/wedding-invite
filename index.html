@@ -28,6 +28,14 @@
         <main id="invitationContentDeck" class="main-invite-deck hidden-view">
             
             <section class="hero-illustration-banner">
+                <div class="birds-container">
+                    <div class="bird bird-1"></div>
+                    <div class="bird bird-2"></div>
+                    <div class="bird bird-3"></div>
+                    <div class="bird bird-4"></div>
+                    <div class="bird bird-5"></div>
+                    <div class="bird bird-6"></div>
+                </div>
                 <div class="hero-caption-box">
                     <span class="hero-pretitle">Save the Date</span>
                 </div>
@@ -38,26 +46,113 @@
                 <button id="audioToggle" class="audio-control-pill">🎵 Play Music</button>
             </section>
 
-            <section class="scratch-coins-wrapper">
-                <div class="scratch-instruction-row">
-                    <span class="finger-icon">🤚🏽</span>
-                    <p>SCRATCH TO DISCOVER THE DATE</p>
+            <section class="gift-reveal-section">
+                <div class="reveal-hint-row">
+                    <span class="ribbon-hint-icon">🎀</span>
+                    <p>PULL EACH RIBBON TO REVEAL THE DATE</p>
                 </div>
-                <h2 class="reveal-header">Reveal</h2>
-                
-                <div class="coins-flex-row">
-                    <div class="coin-container-box" id="coinWrapper1">
-                        <div class="secret-data-node"><span>03</span><label>DAY</label></div>
-                        <canvas id="coinCanvas1"></canvas>
+
+                <div class="gift-boxes-row">
+
+                    <!-- Gift Card 1 — Day -->
+                    <div class="gift-box-outer" id="giftBox1">
+                        <div class="gift-box-card" id="giftCard1">
+                            <!-- Hidden date face underneath -->
+                            <div class="gift-date-face" id="giftDate1">
+                                <span class="date-num">03</span>
+                                <label>DAY</label>
+                            </div>
+                            
+                            <!-- Ribbon overlay layer -->
+                            <div class="gift-ribbon-overlay" id="giftRibbon1">
+                                <div class="gift-ribbon-v"></div>
+                                <div class="gift-ribbon-h"></div>
+                                <div class="gift-bow-wrap" id="giftBow1">
+                                    <svg class="bow-mini-svg" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
+                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
+                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
+                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
+                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d"/>
+                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gift-pull-tab" id="giftPull1">
+                            <div class="pull-string"></div>
+                            <div class="pull-handle">↓<br><small>PULL</small></div>
+                        </div>
                     </div>
-                    <div class="coin-container-box" id="coinWrapper2">
-                        <div class="secret-data-node"><span>April</span><label>MONTH</label></div>
-                        <canvas id="coinCanvas2"></canvas>
+
+                    <!-- Gift Card 2 — Month -->
+                    <div class="gift-box-outer" id="giftBox2">
+                        <div class="gift-box-card" id="giftCard2">
+                            <!-- Hidden date face underneath -->
+                            <div class="gift-date-face" id="giftDate2">
+                                <span class="date-num date-month-num">April</span>
+                                <label>MONTH</label>
+                            </div>
+                            
+                            <!-- Ribbon overlay layer -->
+                            <div class="gift-ribbon-overlay" id="giftRibbon2">
+                                <div class="gift-ribbon-v"></div>
+                                <div class="gift-ribbon-h"></div>
+                                <div class="gift-bow-wrap" id="giftBow2">
+                                    <svg class="bow-mini-svg" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
+                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
+                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
+                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
+                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d"/>
+                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gift-pull-tab" id="giftPull2">
+                            <div class="pull-string"></div>
+                            <div class="pull-handle">↓<br><small>PULL</small></div>
+                        </div>
                     </div>
-                    <div class="coin-container-box" id="coinWrapper3">
-                        <div class="secret-data-node"><span>2027</span><label>YEAR</label></div>
-                        <canvas id="coinCanvas3"></canvas>
+
+                    <!-- Gift Card 3 — Year -->
+                    <div class="gift-box-outer" id="giftBox3">
+                        <div class="gift-box-card" id="giftCard3">
+                            <!-- Hidden date face underneath -->
+                            <div class="gift-date-face" id="giftDate3">
+                                <span class="date-num">2027</span>
+                                <label>YEAR</label>
+                            </div>
+                            
+                            <!-- Ribbon overlay layer -->
+                            <div class="gift-ribbon-overlay" id="giftRibbon3">
+                                <div class="gift-ribbon-v"></div>
+                                <div class="gift-ribbon-h"></div>
+                                <div class="gift-bow-wrap" id="giftBow3">
+                                    <svg class="bow-mini-svg" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
+                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
+                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
+                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
+                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d"/>
+                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gift-pull-tab" id="giftPull3">
+                            <div class="pull-string"></div>
+                            <div class="pull-handle">↓<br><small>PULL</small></div>
+                        </div>
                     </div>
+
                 </div>
             </section>
 

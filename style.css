@@ -147,6 +147,171 @@ body, html {
     line-height: 1.1;
 }
 
+/* 1.1 Flying Birds Animation */
+.birds-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bird {
+    position: absolute;
+    width: 20px;
+    height: 12px;
+    will-change: transform, opacity;
+}
+
+.bird::before,
+.bird::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    border-top: 1.5px solid rgba(20, 20, 20, 0.85); /* Changed from white to elegant charcoal black */
+    border-radius: 50% 50% 0 0;
+}
+
+.bird::before {
+    left: 0;
+    transform-origin: right top;
+}
+
+.bird::after {
+    right: 0;
+    transform-origin: left top;
+}
+
+/* Individual flapping speeds to make flocking look organic */
+.bird-1::before { animation: flap-left 0.45s infinite ease-in-out alternate; }
+.bird-1::after  { animation: flap-right 0.45s infinite ease-in-out alternate; }
+
+.bird-2::before { animation: flap-left 0.38s infinite ease-in-out alternate; }
+.bird-2::after  { animation: flap-right 0.38s infinite ease-in-out alternate; }
+
+.bird-3::before { animation: flap-left 0.52s infinite ease-in-out alternate; }
+.bird-3::after  { animation: flap-right 0.52s infinite ease-in-out alternate; }
+
+.bird-4::before { animation: flap-left 0.41s infinite ease-in-out alternate; }
+.bird-4::after  { animation: flap-right 0.41s infinite ease-in-out alternate; }
+
+.bird-5::before { animation: flap-left 0.48s infinite ease-in-out alternate; }
+.bird-5::after  { animation: flap-right 0.48s infinite ease-in-out alternate; }
+
+.bird-6::before { animation: flap-left 0.35s infinite ease-in-out alternate; }
+.bird-6::after  { animation: flap-right 0.35s infinite ease-in-out alternate; }
+
+/* Flight paths across the scenic balcony image (Large layered flock setup) */
+.bird-1 {
+    top: 45%;
+    animation: flyPath1 14s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.bird-2 {
+    top: 40%;
+    transform: scale(0.7);
+    animation: flyPath2 16s linear infinite;
+    animation-delay: 2.5s;
+}
+
+.bird-3 {
+    top: 52%;
+    transform: scale(0.5);
+    animation: flyPath3 18s linear infinite;
+    animation-delay: 5s;
+}
+
+.bird-4 {
+    top: 43%;
+    transform: scale(0.85);
+    animation: flyPath1 15s linear infinite;
+    animation-delay: 2s; /* Following bird 1 */
+}
+
+.bird-5 {
+    top: 38%;
+    transform: scale(0.65);
+    animation: flyPath2 17s linear infinite;
+    animation-delay: 4.5s; /* Following bird 2 */
+}
+
+.bird-6 {
+    top: 49%;
+    transform: scale(0.45);
+    animation: flyPath3 19s linear infinite;
+    animation-delay: 7.5s; /* Following bird 3 */
+}
+
+@keyframes flap-left {
+    0%   { transform: rotate(-25deg); }
+    100% { transform: rotate(20deg);  }
+}
+
+@keyframes flap-right {
+    0%   { transform: rotate(25deg);  }
+    100% { transform: rotate(-20deg); }
+}
+
+@keyframes flyPath1 {
+    0% {
+        left: -10%;
+        top: 55%;
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.85;
+    }
+    85% {
+        opacity: 0.85;
+    }
+    100% {
+        left: 110%;
+        top: 25%;
+        opacity: 0;
+    }
+}
+
+@keyframes flyPath2 {
+    0% {
+        left: -10%;
+        top: 48%;
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.75;
+    }
+    85% {
+        opacity: 0.75;
+    }
+    100% {
+        left: 110%;
+        top: 20%;
+        opacity: 0;
+    }
+}
+
+@keyframes flyPath3 {
+    0% {
+        left: -10%;
+        top: 60%;
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.65;
+    }
+    85% {
+        opacity: 0.65;
+    }
+    100% {
+        left: 110%;
+        top: 30%;
+        opacity: 0;
+    }
+}
+
 /* 2. Couple Detail Headings Style Profile */
 .couple-details-block {
     padding: 20px 0 10px;
@@ -178,89 +343,259 @@ body, html {
     background-color: #ffffff;
 }
 
-/* 3. REFACTORED: Triple Circular Coins Styling Section Rules */
-.scratch-coins-wrapper {
+/* 3. GIFT-BOX TAP & PULL REVEAL */
+.gift-reveal-section {
     width: 100%;
-    padding: 10px 20px 25px;
+    padding: 55px 20px 65px; /* Generous vertical padding to solve closeness to text */
     box-sizing: border-box;
     text-align: center;
 }
 
-.scratch-instruction-row {
+.reveal-hint-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     color: #a19582;
+    margin-bottom: 40px; /* Pushes boxes down to avoid any overlap */
 }
 
-.scratch-instruction-row p {
+.reveal-hint-row p {
+    font-family: 'Cinzel', serif;
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
+    font-weight: 500;
+    letter-spacing: 2px;
     margin: 0;
 }
 
-.reveal-header {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 600;
-    margin: 15px 0;
-    color: #111111;
+.reveal-hint-icon {
+    font-size: 14px;
+    animation: bowPulse 2s infinite ease-in-out;
 }
 
-.coins-flex-row {
+/* ── Three gift boxes row ── */
+.gift-boxes-row {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-top: 10px;
+    gap: 20px;
 }
 
-.coin-container-box {
+/* Outer wrapper */
+.gift-box-outer {
     position: relative;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
-    overflow: hidden;
-}
-
-/* Inner hidden content layer nodes revealed on scratch completion */
-.secret-data-node {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fffdf9;
+    flex: 1;
+    min-width: 0;
+    max-width: 120px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    z-index: 1;
 }
 
-.secret-data-node span {
+/* Flat rounded-corner gift card */
+.gift-box-card {
+    position: relative;
+    width: 102px;
+    height: 102px;
+    background: linear-gradient(135deg, #fffdfa 0%, #fffbf5 100%);
+    border: 1.2px solid #ebdcc8;
+    border-radius: 22px;
+    box-sizing: border-box;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(139, 32, 53, 0.07);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+}
+
+.gift-box-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(139, 32, 53, 0.12);
+}
+
+/* Date face hidden inside box, pops up when revealed */
+.gift-date-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: #ffffff;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.5s ease 0.15s,
+                transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+    z-index: 5;
+}
+
+.gift-date-face.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.date-num {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: 600;
-    color: #222;
+    color: #2c1a1d;
+    line-height: 1;
 }
 
-.secret-data-node label {
+.date-month-num {
+    font-size: 18px;
+}
+
+.gift-date-face label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #8b2035;
+    text-transform: uppercase;
+}
+
+/* ── Ribbon Overlay (slips off) ── */
+.gift-ribbon-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.gift-ribbon-overlay.sliding-off {
+    animation: ribbonSlideOff 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Ribbon cross bands */
+.gift-ribbon-v {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 18px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        to right,
+        #c0455a 0%, #8b2035 30%, #6b1528 50%, #8b2035 70%, #c0455a 100%
+    );
+}
+
+.gift-ribbon-h {
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 18px;
+    transform: translateY(-50%);
+    background: linear-gradient(
+        to bottom,
+        #c0455a 0%, #8b2035 30%, #6b1528 50%, #8b2035 70%, #c0455a 100%
+    );
+}
+
+/* Bow Positioning */
+.gift-bow-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+    transform-origin: center center;
+}
+
+.gift-bow-wrap.unknotting {
+    animation:
+        bowWiggle  0.32s ease-in-out,
+        bowLoosen  0.48s ease-in 0.30s forwards;
+}
+
+.bow-mini-svg {
+    width: 72px;
+    height: 44px;
+    display: block;
+    filter: drop-shadow(0 3px 6px rgba(181, 98, 116, 0.4));
+}
+
+/* ── Pull tab hanging underneath box ── */
+.gift-pull-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    cursor: pointer;
+    animation: pullBounce 1.9s ease-in-out infinite;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.gift-pull-tab.hidden {
+    opacity: 0;
+    pointer-events: none;
+    animation: none;
+}
+
+.pull-string {
+    width: 2px;
+    height: 18px;
+    background: #e2cdb5;
+}
+
+.pull-handle {
+    background: linear-gradient(135deg, #ebdcc8, #dcd0be);
+    color: #431c23;
+    border-radius: 14px;
+    padding: 4px 10px 5px;
+    font-family: 'Cinzel', serif;
     font-size: 9px;
     letter-spacing: 1px;
-    color: #888;
-    text-transform: uppercase;
-    margin-top: 2px;
+    line-height: 1.5;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    user-select: none;
+    text-align: center;
 }
 
-.coin-container-box canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    cursor: pointer;
+/* ── Keyframes ── */
+
+/* 1. Bow wiggles as if being tugged */
+@keyframes bowWiggle {
+    0%   { transform: translate(-50%, -50%) rotate(0deg)   scale(1);    }
+    20%  { transform: translate(-50%, -50%) rotate(-11deg) scale(1.07); }
+    45%  { transform: translate(-50%, -50%) rotate(10deg)  scale(1.05); }
+    70%  { transform: translate(-50%, -50%) rotate(-6deg)  scale(1.04); }
+    100% { transform: translate(-50%, -50%) rotate(0deg)   scale(1.1);  }
+}
+
+/* 2. Loops spread open and fade — the unknot moment */
+@keyframes bowLoosen {
+    0%   { transform: translate(-50%, -50%) scale(1.1);             opacity: 1;   }
+    25%  { transform: translate(-50%, -50%) scale(1.45) rotate(-7deg); opacity: 0.75; }
+    55%  { transform: translate(-50%, -50%) scale(1.8)  rotate(6deg);  opacity: 0.35; }
+    85%  { transform: translate(-50%, -50%) scale(2.2)  rotate(-4deg); opacity: 0.1;  }
+    100% { transform: translate(-50%, -50%) scale(2.5)  rotate(0deg);  opacity: 0;    }
+}
+
+/* 3. Ribbon slides off the card downwards */
+@keyframes ribbonSlideOff {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    30% {
+        transform: translateY(-6px) rotate(-1.5deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(120px) rotate(6deg);
+        opacity: 0;
+    }
+}
+
+/* 4. Pull tab gentle bounce */
+@keyframes pullBounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(6px); }
+}
+
+@keyframes bowPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.15); }
 }
 
 /* 4. REFACTORED: Textured Parchment Countdown Interface Styles */

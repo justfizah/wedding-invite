@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         InvitationView.toggleAudioEngineState();
     });
 
-    // Initialize HTML5 Canvas Overlay Surface properties (The Scratch Box color)
-    InvitationView.initializeScratchSurface('#cfb53b', '✨ SCRATCH TO REVEAL ✨');
+    // Initialize flat gift card ribbon reveals
+    InvitationView.initRibbonReveal();
 
     // INITIALIZE TIMING ENGINE: Set to April 1st, 2027
     InvitationView.startCountdownEngine('April 3, 2027 16:00:00');
