@@ -342,10 +342,10 @@ body, html {
 }
 
 .couple-main-title {
-    font-family: 'Playwrite ID', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 32px;
     font-weight: 400;
-    color: #232323;
+    color: #3d3939;
     margin: 0 0 15px;
     letter-spacing: 0.5px;
 }
