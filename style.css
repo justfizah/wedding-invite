@@ -76,7 +76,7 @@ body, html {
     font-size: 13px;
     letter-spacing: 4px;
     color: #a29986;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 .envelope-overlay.fade-slide-out {

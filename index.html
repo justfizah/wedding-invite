@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date - Aisha & Ayodeji</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <audio id="inviteAudio" loop>
@@ -15,18 +19,25 @@
     </audio>
 
     <div class="invitation-wrapper">
-        
+
         <div id="envelopeCover" class="envelope-overlay active">
             <div id="waxSealButton" class="envelope-interaction-zone">
                 <div class="wax-seal-hotspot">
+
                     <span class="custom-script-monogram"></span>
+
                 </div>
-                <p class="envelope-tap-caption">TAP TO OPEN</p>
+
+                <p class="envelope-tap-caption" style="text-align: center;">
+                    Music starts automatically. Adjust your volume before you continue.
+                    <br><br>
+                    TAP TO OPEN
+                </p>
             </div>
         </div>
 
         <main id="invitationContentDeck" class="main-invite-deck hidden-view">
-            
+
             <section class="hero-illustration-banner">
                 <div class="birds-container">
                     <div class="bird bird-1"></div>
@@ -62,21 +73,27 @@
                                 <span class="date-num">03</span>
                                 <label>DAY</label>
                             </div>
-                            
+
                             <!-- Ribbon overlay layer -->
                             <div class="gift-ribbon-overlay" id="giftRibbon1">
                                 <div class="gift-ribbon-v"></div>
                                 <div class="gift-ribbon-h"></div>
                                 <div class="gift-bow-wrap" id="giftBow1">
                                     <svg class="bow-mini-svg" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
-                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
-                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
-                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
-                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d"/>
-                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895"/>
+                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c"
+                                            opacity="0.9" />
+                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2"
+                                            opacity="0.55" />
+                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c"
+                                            opacity="0.9" />
+                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2"
+                                            opacity="0.55" />
+                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5"
+                                            stroke-linecap="round" fill="none" />
+                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5"
+                                            stroke-linecap="round" fill="none" />
+                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d" />
+                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895" />
                                     </svg>
                                 </div>
                             </div>
@@ -95,21 +112,27 @@
                                 <span class="date-num date-month-num">April</span>
                                 <label>MONTH</label>
                             </div>
-                            
+
                             <!-- Ribbon overlay layer -->
                             <div class="gift-ribbon-overlay" id="giftRibbon2">
                                 <div class="gift-ribbon-v"></div>
                                 <div class="gift-ribbon-h"></div>
                                 <div class="gift-bow-wrap" id="giftBow2">
                                     <svg class="bow-mini-svg" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
-                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
-                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
-                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
-                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d"/>
-                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895"/>
+                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c"
+                                            opacity="0.9" />
+                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2"
+                                            opacity="0.55" />
+                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c"
+                                            opacity="0.9" />
+                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2"
+                                            opacity="0.55" />
+                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5"
+                                            stroke-linecap="round" fill="none" />
+                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5"
+                                            stroke-linecap="round" fill="none" />
+                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d" />
+                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895" />
                                     </svg>
                                 </div>
                             </div>
@@ -128,21 +151,27 @@
                                 <span class="date-num">2027</span>
                                 <label>YEAR</label>
                             </div>
-                            
+
                             <!-- Ribbon overlay layer -->
                             <div class="gift-ribbon-overlay" id="giftRibbon3">
                                 <div class="gift-ribbon-v"></div>
                                 <div class="gift-ribbon-h"></div>
                                 <div class="gift-bow-wrap" id="giftBow3">
                                     <svg class="bow-mini-svg" viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
-                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
-                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c" opacity="0.9"/>
-                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2" opacity="0.55"/>
-                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d"/>
-                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895"/>
+                                        <path d="M50 29 C34 7,4 7,7 24 C10 40,37 38,50 29Z" fill="#9f4c5c"
+                                            opacity="0.9" />
+                                        <path d="M50 29 C35 11,7 14,10 27 C13 38,36 36,50 29Z" fill="#f5b6c2"
+                                            opacity="0.55" />
+                                        <path d="M50 29 C66 7,96 7,93 24 C90 40,63 38,50 29Z" fill="#9f4c5c"
+                                            opacity="0.9" />
+                                        <path d="M50 29 C65 11,93 14,90 27 C87 38,64 36,50 29Z" fill="#f5b6c2"
+                                            opacity="0.55" />
+                                        <path d="M49 33 C43 41,27 49,16 57" stroke="#9f4c5c" stroke-width="3.5"
+                                            stroke-linecap="round" fill="none" />
+                                        <path d="M51 33 C57 41,73 49,84 57" stroke="#9f4c5c" stroke-width="3.5"
+                                            stroke-linecap="round" fill="none" />
+                                        <ellipse cx="50" cy="29" rx="6.5" ry="5.5" fill="#7c2f3d" />
+                                        <ellipse cx="50" cy="29" rx="4" ry="3" fill="#d48895" />
                                     </svg>
                                 </div>
                             </div>
@@ -159,7 +188,7 @@
             <section class="textured-countdown-block">
                 <h3 class="countdown-section-heading">Countdown</h3>
                 <p class="countdown-subtext">Until the most special day of our lives</p>
-                
+
                 <div class="countdown-grid-row">
                     <div class="parchment-box"><span id="days">00</span><label>DAYS</label></div>
                     <div class="parchment-box"><span id="hours">00</span><label>HOURS</label></div>
@@ -174,7 +203,8 @@
                     <div id="venueMap" style="width:100%;height:100%;"></div>
                 </div>
                 <h4 class="venue-footer-title">Lagos</h4>
-                <p class="venue-disclaimer">La Madison Place Block 2, Plot 1, Okunade Bluewaters Scheme, Lekki Peninsula, Lagos State.</p>
+                <p class="venue-disclaimer">La Madison Place Block 2, Plot 1, Okunade Bluewaters Scheme, Lekki
+                    Peninsula, Lagos State.</p>
             </section>
 
         </main>
@@ -252,4 +282,5 @@
         })();
     </script>
 </body>
+
 </html>
